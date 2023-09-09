@@ -1,0 +1,48 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>당근마켓</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <script src="/js/form.js"></script>
+</head>
+<body>
+
+<p><a href="/">당근마켓</a></p>
+
+<button type="button" th:if="${login}=='login'" th:text="${login}" th:onclick="location.href='/login'"></button>
+
+<p>
+    <form action="/search" onsubmit="return check_keyword()" method="post">
+        <input type="text" id="searchInput" name="title" th:placeholder="${residence == null ? '전체 검색' : residence + ' 근처에서 검색'}">
+        <input type="submit" value="검색">
+    </form>
+</p>
+
+<p><button th:if="${login}=='logout'" type="button" onclick="location.href='/posting'">+ 글쓰기</button></p>
+
+<table>
+    <thead>
+    <tr>
+        <th>제목</th>
+        <th>지역</th>
+        <th>시간</th>
+        <th>가격</th>
+        <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:if="${posts == null or posts.size() == 0}">
+        <td colspan="6" th:text="'앗! ' + ${residence == null ? '' : residence + ' 근처에는 '} + '\'' + ${searchForm.title} + '\' 검색 결과가 없어요.'">앗! 검색 결과가 없어요.</td>
+    </tr>
+    <tr th:each="post : ${posts}" th:if="${posts != null and posts.size() > 0}">
+        <td><a th:href="@{/post(id=${post.id})}" th:text="${post.title}"></a></td>
+        <td th:text="${post.user.residence[1] + ' ' + post.user.residence[2]}"></td>
+        <td th:text="${post.time}"></td>
+        <td th:text="${post.price == 0? '나눔' : #numbers.formatInteger(post.price, 3, 'COMMA') + '원'}"></td>
+        <td th:text="${post.dealStatus}"></td>
+    </tr>
+    </tbody>
+</table>
+
+</body>
+</html>

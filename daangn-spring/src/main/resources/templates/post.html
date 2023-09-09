@@ -1,0 +1,54 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title th:text="${post.title}">당근마켓</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+<p><a href="/">당근마켓</a></p>
+
+<style>
+    table {
+        border-collapse: collapse;
+    }
+
+    th,
+    td {
+        border: 1px solid black;
+        padding: 8px;
+    }
+
+    th {
+        text-align: left;
+    }
+</style>
+
+<table>
+    <tr>
+        <th>유저 이름</th>
+        <td th:text="${post.user.nickname}"></td>
+    </tr>
+    <tr>
+        <th>지역</th>
+        <td th:text="${post.user.residence[1] + ' ' + post.user.residence[2]}"></td>
+    </tr>
+    <tr>
+        <th>매너 온도</th>
+        <td th:text="${post.user.mannerTemperature}"></td>
+    </tr>
+    <tr>
+        <th>시간</th>
+        <td th:text="${post.time}"></td>
+    </tr>
+    <tr>
+        <th>제목</th>
+        <td th:text="${post.title}"></td>
+    </tr>
+    <tr>
+        <th>내용</th>
+        <td th:text="${post.content}"></td>
+    </tr>
+</table>
+
+</body>
+</html>

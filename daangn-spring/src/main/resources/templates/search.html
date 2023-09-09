@@ -1,0 +1,50 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>당근마켓</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <script src="/js/form.js"></script>
+</head>
+<body>
+
+<p><a href="/">당근마켓</a></p>
+
+<p>
+    <form action="/search" id="searchForm" onsubmit="return check_keyword()" method="post">
+        <p><input type="text" id="searchInput" name="title" th:value="${searchForm.title}" th:placeholder="${residence == null ? '전체 검색' : residence + ' 근처에서 검색'}"></p>
+        <p>
+            <input type="number" id="minPriceInput" name="minPrice" th:value="${searchForm.minPrice}" placeholder="최소 금액">
+            <input type="number" id="maxPriceInput" name="maxPrice" th:value="${searchForm.maxPrice}" placeholder="최대 금액">
+        </p>
+        <p>거래가능만 보기<input type="checkbox" id="dealStatus" name="dealStatus" value="거래중" onclick="submit_form()" th:checked="${searchForm.dealStatus == '거래중'}"></p>
+        <input type="submit" value="검색"/>
+    </form>
+
+</p>
+
+<table>
+    <thead>
+    <tr>
+        <th>제목</th>
+        <th>지역</th>
+        <th>시간</th>
+        <th>가격</th>
+        <th></th>
+    </tr>
+    </thead>
+
+    <tbody>
+    <tr th:if="${posts == null or posts.size() == 0}">
+        <td colspan="6" th:text="'앗! ' + ${residence == null ? '' : residence + ' 근처에는 '} + '\'' + ${searchForm.title} + '\' 검색 결과가 없어요.'">앗! 검색 결과가 없어요.</td>
+    </tr>
+    <tr th:each="post : ${posts}" th:if="${posts != null and posts.size() > 0}">
+        <td><a th:href="@{/post(id=${post.id})}" th:text="${post.title}"></a></td>
+        <td th:text="${post.user.residence[1] + ' ' + post.user.residence[2]}"></td>
+        <td th:text="${post.time}"></td>
+        <td th:text="${post.price == 0? '나눔' : #numbers.formatInteger(post.price, 3, 'COMMA') + '원'}"></td>
+        <td th:text="${post.dealStatus}"></td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>

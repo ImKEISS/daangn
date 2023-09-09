@@ -1,0 +1,26 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>새 글 작성</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <script src="/js/form.js"></script>
+</head>
+<body>
+<a href="/">당근마켓</a>
+
+<p>
+    <form action="/posting" onsubmit="return check_posting(event)" method="post">
+        <p><input type="text" id="titleInput" name="title" placeholder="글 제목"></p>
+        <p>
+            <input type="number" id="priceInput" name="price" oninput="checked_free(event)" placeholder="가격 (선택사항)">
+            <input type="checkbox" id="freeCheckbox" onclick="disabled_price(this)"> 나눔
+        </p>
+        <p><textarea id="contentTextarea" name="content" cols="50" rows="5" th:placeholder="${residence} + '에 올릴 게시글 내용을 작성해주세요. (판매 금지 물품은 게시가 제한될 수 있어요.)'"></textarea></p>
+
+        <input type="submit" value="완료">
+    </form>
+</p>
+
+
+</body>
+</html>
